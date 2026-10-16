@@ -1,5 +1,3 @@
-DROP DATABASE IF EXISTS atmosfera_40;
-
 CREATE DATABASE IF NOT EXISTS atmosfera_40;
 USE atmosfera_40;
 
