@@ -1,59 +1,78 @@
-const elementoCanvas = document.getElementById('grafico-temperatura').getContext('2d');
+const canvasTempUmidade = document.getElementById('graficoTempUmidade').getContext('2d');
+const canvasAmbiente = document.getElementById('graficoAmbiente').getContext('2d');
 
-let meuGrafico = new Chart(elementoCanvas, {
+let graficoTempUmidade = new Chart(canvasTempUmidade, {
     type: 'line',
     data: {
-        labels: horarios,
-        datasets: [{
-            label: 'Temperatura (°C)',
-            data: temperaturas,
-            borderColor: '#38bdf8',
-            backgroundColor: 'rgba(56, 189, 248, 0.1)',
-            fill: true,
-            tension: 0.3
-        }]
+        labels: [],
+        datasets: [
+            { label: 'Temperatura (°C)', data: [], borderColor: '#38bdf8', backgroundColor: 'rgba(56, 189, 248, 0.1)', fill: true, tension: 0.3 },
+            { label: 'Umidade (%)', data: [], borderColor: '#4ade80', backgroundColor: 'rgba(74, 222, 128, 0.1)', fill: true, tension: 0.3 }
+        ]
     },
     options: {
         responsive: true,
-        plugins: {
-            legend: {
-                labels: { color: '#f8fafc'}
-            }
-        },
-        scales: {
-            x: { ticks: { color: '#94a3b8' }},
-            y: { ticks: { color: '#94a3b8' }}
-        }
+        maintainAspectRatio: false,
+        plugins: { legend: { labels: { color: '#f8fafc' } } },
+        scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' } } }
+    }
+});
+
+let graficoAmbiente = new Chart(canvasAmbiente, {
+    type: 'line',
+    data: {
+        labels: [],
+        datasets: [
+            { label: 'Pressão (hPa)', data: [], borderColor: '#facc15', fill: false, tension: 0.3 },
+            { label: 'Luminosidade (Lux)', data: [], borderColor: '#f97316', fill: false, tension: 0.3 },
+            { label: 'Vento (km/h)', data: [], borderColor: '#a855f7', fill: false, tension: 0.3 }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { labels: { color: '#f8fafc' } } },
+        scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' } } }
     }
 });
 
 async function carregarDadosDaAPI() {
     try {
-        const resposta = await fetch('http://localhost:8080/api/registros/ultimas-24h')
+        const resposta = await fetch('http://localhost:8080/api/registros/ultimas-24h');
         const registros = await resposta.json();
 
-        if (registros.length === 0) return;
+        if (!registros || registros.length === 0) return;
 
         const horarios = registros.map(item => {
             const data = new Date(item.dataHora);
-            return data.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+            return data.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
         });
 
-        const temperaturas = registros.map(item => item.temperatura);
+        const u = registros[registros.length - 1];
+        document.getElementById('valTemperatura').innerText = u.temperatura !== null ? `${u.temperatura} °C` : '--';
+        document.getElementById('valUmidade').innerText = u.umidade !== null ? `${u.umidade} %` : '--';
+        document.getElementById('valPressao').innerText = u.pressao !== null ? `${u.pressao} hPa` : '--';
+        document.getElementById('valAltitude').innerText = u.altitude !== null ? `${u.altitude} m` : '--';
+        document.getElementById('valLuminosidade').innerText = u.luminosidade !== null ? `${u.luminosidade} Lux` : '--';
+        document.getElementById('valVelocidadeVento').innerText = u.velocidadeVento !== null ? `${u.velocidadeVento} km/h` : '--';
+        document.getElementById('valDirecaoVento').innerText = u.direcaoVento !== null ? `${u.direcaoVento} °` : '--';
+        document.getElementById('valIntensidadeWifi').innerText = u.intensidadeWifi !== null ? `${u.intensidadeWifi} dBm` : '--';
 
-        const ultimoRegistro = registros[registros.length - 1];
-        document.querySelectorAll('.cartao .valor')[0].innerText = `${ultimoRegistro.temperatura} °C`;
-        document.querySelectorAll('.cartao .valor')[1].innerText = `${ultimoRegistro.umidade} %`;
-        document.querySelectorAll('.cartao .valor')[2].innerText = `${ultimoRegistro.pressao} hPa`;
-        document.querySelectorAll('.cartao .valor')[3].innerText = `${ultimoRegistro.luminosidade} Lux`;
+        graficoTempUmidade.data.labels = horarios;
+        graficoTempUmidade.data.datasets[0].data = registros.map(r => r.temperatura);
+        graficoTempUmidade.data.datasets[1].data = registros.map(r => r.umidade);
+        graficoTempUmidade.update();
 
-        meuGrafico.data.labels = horarios;
-        meuGrafico.data.datasets[0].data = temperaturas;
-        meuGrafico.update();
+        graficoAmbiente.data.labels = horarios;
+        graficoAmbiente.data.datasets[0].data = registros.map(r => r.pressao);
+        graficoAmbiente.data.datasets[1].data = registros.map(r => r.luminosidade);
+        graficoAmbiente.data.datasets[2].data = registros.map(r => r.velocidadeVento);
+        graficoAmbiente.update();
+
     } catch (erro) {
-        console.error('Erro ao conectar ao backend:', erro);
+        console.error('Erro ao conectar com a API Java:', erro);
     }
 }
 
 carregarDadosDaAPI();
-setInterval(carregarDadosDaAPI, 5000);
+setInterval(carregarDadosDaAPI, 3000);

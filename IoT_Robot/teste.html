@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Teste - IoT Atmosfera 4.0</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <header class="cabecalho">
+            <div>
+                <h1>Painel de Testes do IoT</h1>
+                <p>Atmosfera 4.0 - Gerador e Validador de Sensores</p>
+            </div>
+            <a href="../dashboard/index.html" class="btn-navegacao">← Voltar ao Dashboard</a>
+        </header>
+
+        <section class="grid-cartoes">
+            <div class="cartao-indicador"><span class="titulo-cartao">Temperatura</span><span class="valor-cartao"
+                    id="cardTemp">-- °C</span></div>
+            <div class="cartao-indicador"><span class="titulo-cartao">Umidade</span><span class="valor-cartao"
+                    id="cardUmidade">-- %</span></div>
+            <div class="cartao-indicador"><span class="titulo-cartao">Pressão</span><span class="valor-cartao"
+                    id="cardPressao">-- hPa</span></div>
+            <div class="cartao-indicador"><span class="titulo-cartao">Altitude</span><span class="valor-cartao"
+                    id="cardAltitude">-- m</span></div>
+            <div class="cartao-indicador"><span class="titulo-cartao">Luminosidade</span><span class="valor-cartao"
+                    id="cardLuminosidade">-- Lux</span></div>
+            <div class="cartao-indicador"><span class="titulo-cartao">Velocidade Vento</span><span class="valor-cartao"
+                    id="cardVento">-- km/h</span></div>
+            <div class="cartao-indicador"><span class="titulo-cartao">Direção Vento</span><span class="valor-cartao"
+                    id="cardDirecao">-- °</span></div>
+            <div class="cartao-indicador"><span class="titulo-cartao">Sinal Wi-Fi</span><span class="valor-cartao"
+                    id="cardWifi">-- dBm</span></div>
+        </section>
+
+        <div class="grid-controles">
+            <div class="cartao">
+                <h2>1. Simulação Manual</h2>
+                <div class="grid-campos">
+                    <div><label>ID Dispositivo (FK)</label><input type="number" id="idDispositivoFk" value="2"></div>
+                    <div><label>Temperatura (°C)</label><input type="number" step="0.1" id="temperatura" value="25.4">
+                    </div>
+                    <div><label>Umidade (%)</label><input type="number" step="0.1" id="umidade" value="62.0"></div>
+                    <div><label>Pressão (hPa)</label><input type="number" step="0.1" id="pressao" value="1013.2"></div>
+                    <div><label>Altitude (m)</label><input type="number" step="0.1" id="altitude" value="750.0"></div>
+                    <div><label>Luminosidade (Lux)</label><input type="number" step="0.1" id="luminosidade"
+                            value="850.0"></div>
+                    <div><label>Velocidade Vento (km/h)</label><input type="number" step="0.1" id="velocidadeVento"
+                            value="14.2"></div>
+                    <div><label>Direção Vento (°)</label><input type="number" id="direcaoVento" value="180"></div>
+                    <div><label>Sinal Wi-Fi (dBm)</label><input type="number" id="intensidadeWifi" value="-65"></div>
+                </div>
+                <button class="btn-enviar" onclick="enviarEnvioManual()">Enviar Dados Manuais</button>
+            </div>
+
+            <div class="cartao">
+                <h2>2. Simulação Automática</h2>
+                <p class="descricao">Ajuste a frequência e inicie a geração contínua de todas as 8 métricas.</p>
+
+                <div class="campo-tempo">
+                    <label for="intervaloSegundos">Intervalo entre envios (segundos):</label>
+                    <input type="number" id="intervaloSegundos" value="30" min="1" max="60">
+                </div>
+
+                <div class="botoes-automacao">
+                    <button id="btnIniciarAuto" class="btn-auto" onclick="iniciarAutomacao()">▶️ Iniciar Automático</button>
+                    <button id="btnPararAuto" class="btn-parar" onclick="pararAutomacao()">⏹️ Parar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gráfico do Painel de Testes -->
+        <div class="cartao">
+            <h2>Histórico Visual em Tempo Real</h2>
+            <div class="container-grafico">
+                <canvas id="graficoSimulacao"></canvas>
+            </div>
+        </div>
+
+        <div class="cartao">
+            <h2>Console de Comunicação da API</h2>
+            <div id="painelLog">> Aguardando ações...</div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

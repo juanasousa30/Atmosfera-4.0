@@ -1,51 +1,72 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Atmosfera 4.0</title>
+    <title>Atmosfera 4.0 - Dashboard Complete</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header class="header">
-        <h1>Atmosfera 4.0</h1>
-        <p>Painel de Monitoramento Meteorológico - SENAI</p>
-    </header>
+    <div class="principal">
+        <header>
+            <h1>Atmosfera 4.0</h1>
+            <p>Monitoramento Meteorológico em Tempo Real</p>
+            <a href="../IoT_Robot/teste.html" class="btn-teste">Painel de Testes IoT</a>
+        </header>
 
-    <main class="principal">
-
-        <section class="grade-cartoes">
+        <div class="grade-cartoes">
             <div class="cartao">
-                <h3>Temperatura</h3>
-                <p class="valor">24.5 °C</p>
+                <h3>TEMPERATURA</h3>
+                <div class="valor" id="valTemperatura">-- °C</div>
             </div>
-
             <div class="cartao">
-                <h3>Umidade</h3>
-                <p class="valor">65 %</p>
+                <h3>UMIDADE</h3>
+                <div class="valor" id="valUmidade">-- %</div>
             </div>
-
             <div class="cartao">
-                <h3>Pressão</h3>
-                <p class="valor">1013 hPa</p>
+                <h3>PRESSÃO</h3>
+                <div class="valor" id="valPressao">-- hPa</div>
             </div>
-
             <div class="cartao">
-                <h3>Luminosidade</h3>
-                <p class="valor">850 Lux</p>
+                <h3>ALTITUDE</h3>
+                <div class="valor" id="valAltitude">-- m</div>
             </div>
-        </section>
+            <div class="cartao">
+                <h3>LUMINOSIDADE</h3>
+                <div class="valor" id="valLuminosidade">-- Lux</div>
+            </div>
+            <div class="cartao">
+                <h3>VELOCIDADE VENTO</h3>
+                <div class="valor" id="valVelocidadeVento">-- km/h</div>
+            </div>
+            <div class="cartao">
+                <h3>DIREÇÃO VENTO</h3>
+                <div class="valor" id="valDirecaoVento">-- °</div>
+            </div>
+            <div class="cartao">
+                <h3>SINAL WI-FI</h3>
+                <div class="valor" id="valIntensidadeWifi">-- dBm</div>
+            </div>
+        </div>
 
-        <section class="caixa-grafico">
-            <h2>Histórico das Últimas 24 Horas</h2>
-            <canvas id="grafico-temperatura"></canvas>
-        </section>
+        <!-- Gráfico 1: Temperatura e Umidade -->
+        <div class="caixa-grafico">
+            <h2>Temperatura (°C) e Umidade (%)</h2>
+            <div class="espaco-grafico">
+                <canvas id="graficoTempUmidade"></canvas>
+            </div>
+        </div>
 
-    </main>
+        <div class="caixa-grafico">
+            <h2>Pressão (hPa), Luminosidade (Lux) e Vento (km/h)</h2>
+            <div class="espaco-grafico">
+                <canvas id="graficoAmbiente"></canvas>
+            </div>
+        </div>
+    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
-    
 </body>
 </html>
