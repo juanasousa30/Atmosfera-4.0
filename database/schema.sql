@@ -40,7 +40,7 @@ INSERT INTO dispositivos (nome_dispositivo, localizacao, tipo_dispositivo, gatew
 ('Estação Norte', 'Canteiro A', 'Estação Meteorológica', 1),
 ('Sensor Galpão', 'Galpão 02', 'Sensor Ambiental', 1);
 
-INSERT INTO atuadores (id_dispositivo_fk, nome_atuador, status_atual, ultimo_comando) VALUES
+INSERT INTO atuadores (id_dispositivo_fk, nome_atuador, status_atual) VALUES
 (1, 'Relé de Irrigação', 1),
 (2, 'Exaustor de Ar', 0),
 (3, 'Lâmpada Aquecedora', 1);

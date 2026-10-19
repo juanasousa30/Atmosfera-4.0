@@ -1,7 +1,6 @@
 const elementoCanvas = document.getElementById('grafico-temperatura').getContext('2d');
-const horarios = ['08:00', '10:00', '12:00', '14:00', '16:00', '18:00'];
-const temperaturas = [21.5, 23.0, 26.4, 25.8, 24.5];
-const meuGrafico = new Chart(elementoCanvas, {
+
+let meuGrafico = new Chart(elementoCanvas, {
     type: 'line',
     data: {
         labels: horarios,
@@ -28,11 +27,33 @@ const meuGrafico = new Chart(elementoCanvas, {
     }
 });
 
-async function carregarDadosDoBanco() {
-    const resposta = await fetch('http://localhost:3000/api/registros');
-    const dados = await resposta.json();
+async function carregarDadosDaAPI() {
+    try {
+        const resposta = await fetch('http://localhost:8080/api/registros/ultimas-24h')
+        const registros = await resposta.json();
 
-    meuGrafico.data.labels = dados.map(item => item.data_hora);
-    meuGrafico.data.datasets[0].data = dados.map(item => item.temperatura);
-    meuGrafico.update();
+        if (registros.length === 0) return;
+
+        const horarios = registros.map(item => {
+            const data = new Date(item.dataHora);
+            return data.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+        });
+
+        const temperaturas = registros.map(item => item.temperatura);
+
+        const ultimoRegistro = registros[registros.length - 1];
+        document.querySelectorAll('.cartao .valor')[0].innerText = `${ultimoRegistro.temperatura} °C`;
+        document.querySelectorAll('.cartao .valor')[1].innerText = `${ultimoRegistro.umidade} %`;
+        document.querySelectorAll('.cartao .valor')[2].innerText = `${ultimoRegistro.pressao} hPa`;
+        document.querySelectorAll('.cartao .valor')[3].innerText = `${ultimoRegistro.luminosidade} Lux`;
+
+        meuGrafico.data.labels = horarios;
+        meuGrafico.data.datasets[0].data = temperaturas;
+        meuGrafico.update();
+    } catch (erro) {
+        console.error('Erro ao conectar ao backend:', erro);
+    }
 }
+
+carregarDadosDaAPI();
+setInterval(carregarDadosDaAPI, 5000);
