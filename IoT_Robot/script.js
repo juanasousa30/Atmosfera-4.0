@@ -1,6 +1,8 @@
 const URL_API = 'http://localhost:8080/api/registros';
 let idIntervalo = null;
 
+/* Configuração do Gráfico */
+
 const ctx = document.getElementById('graficoSimulacao').getContext('2d');
 const graficoSimulacao = new Chart(ctx, {
     type: 'line',
@@ -19,6 +21,8 @@ const graficoSimulacao = new Chart(ctx, {
         scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' } } }
     }
 });
+
+/* Atualizar Dados */
 
 function atualizarInterfaceVisual(dados) {
     document.getElementById('cardTemp').innerText = `${dados.temperatura} °C`;
@@ -46,6 +50,8 @@ function atualizarInterfaceVisual(dados) {
     graficoSimulacao.update();
 }
 
+/* Atualizar Console */
+
 function adicionarLog(mensagem, tipo = '') {
     const elementoLog = document.getElementById('painelLog');
     const hora = new Date().toLocaleTimeString();
@@ -54,6 +60,8 @@ function adicionarLog(mensagem, tipo = '') {
     elementoLog.innerHTML += `<div class="${classe}">[${hora}] ${mensagem}</div>`;
     elementoLog.scrollTop = elementoLog.scrollHeight;
 }
+
+/* Enviar Requisição API */
 
 async function dispararRequisicao(dados) {
     try {
@@ -74,6 +82,8 @@ async function dispararRequisicao(dados) {
     }
 }
 
+/* Envio Manual de Dados */
+
 function enviarEnvioManual() {
     const dados = {
         idDispositivoFk: parseInt(document.getElementById('idDispositivoFk').value),
@@ -91,6 +101,8 @@ function enviarEnvioManual() {
     dispararRequisicao(dados);
 }
 
+/* Envio Aleatorio de Dados*/
+
 function gerarDadosAleatorios() {
     return {
         idDispositivoFk: 2,
@@ -104,6 +116,8 @@ function gerarDadosAleatorios() {
         intensidadeWifi: Math.floor(Math.random() * (-50 - (-85) + 1)) - 85
     };
 }
+
+/* Envio Automatico de Dados */
 
 function iniciarAutomacao() {
     const tempoSegundos = parseInt(document.getElementById('intervaloSegundos').value) || 3;
@@ -121,6 +135,8 @@ function iniciarAutomacao() {
         dispararRequisicao(gerarDadosAleatorios());
     }, tempoMilissegundos);
 }
+
+/* Parar Envio Automatico de Dados */
 
 function pararAutomacao() {
     clearInterval(idIntervalo);

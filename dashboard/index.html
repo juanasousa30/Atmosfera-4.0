@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atmosfera 4.0 - Dashboard Complete</title>
+    <title>Atmosfera 4.0 - Dashboard</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="imagens/icone-clima.png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
+    <!-- Header -->
 
     <div class="principal">
         <header>
@@ -15,6 +20,8 @@
             <p>Monitoramento Meteorológico em Tempo Real</p>
             <a href="../IoT_Robot/teste.html" class="btn-teste">Painel de Testes IoT</a>
         </header>
+
+        <!-- Cartão de Informações -->
 
         <div class="grade-cartoes">
             <div class="cartao">
@@ -42,25 +49,39 @@
                 <div class="valor" id="valVelocidadeVento">-- km/h</div>
             </div>
             <div class="cartao">
-                <h3>DIREÇÃO VENTO</h3>
-                <div class="valor" id="valDirecaoVento">-- °</div>
-            </div>
-            <div class="cartao">
                 <h3>SINAL WI-FI</h3>
                 <div class="valor" id="valIntensidadeWifi">-- dBm</div>
             </div>
+            <div class="cartao">
+                <h3>DIREÇÃO VENTO</h3>
+                <div class="conteudo-vento">
+                    <div class="valor" id="valDirecaoVento">-- °</div>
+
+                    <div class="bussola-container">
+                        <div class="bussola">
+                            <span class="ponto norte">N</span>
+                            <span class="ponto leste">L</span>
+                            <span class="ponto sul">S</span>
+                            <span class="ponto oeste">O</span>
+                            <div class="agulha" id="agulhaBussola"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- Gráfico 1: Temperatura e Umidade -->
+        <!-- Gráfico de Temperatura Umidade, Vento -->
         <div class="caixa-grafico">
-            <h2>Temperatura (°C) e Umidade (%)</h2>
+            <h2>Temperatura (°C), Umidade (%) e Vento (km/h)</h2>
             <div class="espaco-grafico">
                 <canvas id="graficoTempUmidade"></canvas>
             </div>
         </div>
 
+        <!-- Gráfico de Pressão e Luminosidade -->
+
         <div class="caixa-grafico">
-            <h2>Pressão (hPa), Luminosidade (Lux) e Vento (km/h)</h2>
+            <h2>Pressão (hPa) e Luminosidade (Lux)</h2>
             <div class="espaco-grafico">
                 <canvas id="graficoAmbiente"></canvas>
             </div>
@@ -69,4 +90,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>

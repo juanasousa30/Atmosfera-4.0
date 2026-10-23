@@ -1,3 +1,5 @@
+/* Corpo e Estrutura */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -12,6 +14,8 @@ body {
     display: flex;
     justify-content: center;
 }
+
+/* Header */
 
 .container {
     max-width: 1100px;
@@ -33,6 +37,8 @@ body {
 .cabecalho h1 { color: #38bdf8; font-size: 1.5rem; }
 .cabecalho p { color: #94a3b8; font-size: 0.9rem; }
 
+/* Botão para ir ao Dashboard */
+
 .btn-navegacao {
     background-color: #334155;
     color: #38bdf8;
@@ -48,6 +54,8 @@ body {
     background-color: #38bdf8;
     color: #0f172a;
 }
+
+/* Cartões de Informações */
 
 .grid-cartoes {
     display: grid;
@@ -67,6 +75,8 @@ body {
 
 .titulo-cartao { color: #94a3b8; font-size: 0.8rem; text-transform: uppercase; }
 .valor-cartao { color: #38bdf8; font-size: 1.4rem; font-weight: bold; }
+
+/* Simulação de Dados */
 
 .grid-controles {
     display: grid;
@@ -103,6 +113,9 @@ input {
 }
 
 .campo-tempo { margin-bottom: 20px; }
+
+/* Botões de Simulação de Dados */
+
 .botoes-automacao { display: flex; gap: 10px; }
 
 button {
@@ -125,7 +138,11 @@ button {
 .btn-parar { background-color: #dc2626; color: white; display: none; }
 .btn-parar:hover { background-color: #b91c1c; }
 
+/* Gráfico */
+
 .container-grafico { position: relative; height: 250px; width: 100%; }
+
+/* Console */
 
 #painelLog {
     background-color: #020617;

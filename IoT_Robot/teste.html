@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel de Teste - IoT Atmosfera 4.0</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="imagens/icone-testes.png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    
+    <!-- Header -->
 
     <div class="container">
         <header class="cabecalho">
@@ -17,6 +20,8 @@
             </div>
             <a href="../dashboard/index.html" class="btn-navegacao">← Voltar ao Dashboard</a>
         </header>
+
+        <!-- Cartões de Informações -->
 
         <section class="grid-cartoes">
             <div class="cartao-indicador"><span class="titulo-cartao">Temperatura</span><span class="valor-cartao"
@@ -36,6 +41,8 @@
             <div class="cartao-indicador"><span class="titulo-cartao">Sinal Wi-Fi</span><span class="valor-cartao"
                     id="cardWifi">-- dBm</span></div>
         </section>
+
+        <!-- Injeção de Dados Manual -->
 
         <div class="grid-controles">
             <div class="cartao">
@@ -57,6 +64,8 @@
                 <button class="btn-enviar" onclick="enviarEnvioManual()">Enviar Dados Manuais</button>
             </div>
 
+            <!-- Injeção de Dados Automatico -->
+
             <div class="cartao">
                 <h2>2. Simulação Automática</h2>
                 <p class="descricao">Ajuste a frequência e inicie a geração contínua de todas as 8 métricas.</p>
@@ -73,13 +82,16 @@
             </div>
         </div>
 
-        <!-- Gráfico do Painel de Testes -->
+        <!-- Gráfico dos Dados -->
+
         <div class="cartao">
             <h2>Histórico Visual em Tempo Real</h2>
             <div class="container-grafico">
                 <canvas id="graficoSimulacao"></canvas>
             </div>
         </div>
+
+        <!-- Console -->
 
         <div class="cartao">
             <h2>Console de Comunicação da API</h2>
